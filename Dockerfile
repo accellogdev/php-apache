@@ -154,10 +154,33 @@ RUN  cd /usr/bin \
     && ./certbot-auto --os-packages-only -n
 
 # componentes para o envio de emails e emissão de recibos
-RUN apt-get update -y && apt-get install -y sendmail libpng-dev \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install gd \
+# https://github.com/exozet/docker-php-fpm
+RUN apt-get update -y && apt-get install -y \
+  sendmail \
+  libpng-dev \
+  libfreetype6-dev \
+  libjpeg-dev \
+  libxpm-dev \
+  libwebp-dev  # php >=7.0 (use libvpx for php <7.0)
+
+RUN docker-php-ext-install mbstring \
     && docker-php-ext-install gettext
+
+RUN docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/ \
+    --with-xpm-dir=/usr/include \
+    --with-webp-dir=/usr/include/ # php >=7.0 (use libvpx for php <7.0)
+
+RUN docker-php-ext-install gd \
+    && docker-php-ext-install gettext
+	
+RUN chmod 777 -R /var/www
+
+#RUN apt-get update -y && apt-get install -y sendmail libpng-dev \
+#    && docker-php-ext-install mbstring \
+#    && docker-php-ext-install gd \
+#    && docker-php-ext-install gettext
 
 RUN apt-get update && \
     apt-get install -y \
