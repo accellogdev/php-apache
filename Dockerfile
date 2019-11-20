@@ -1,4 +1,4 @@
-FROM php:7.0.33-apache AS webservice
+FROM php:7.2-apache AS webservice
 
 LABEL maintainer="valter@accellog.com"
 

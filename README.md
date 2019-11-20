@@ -1,5 +1,5 @@
 # apachephpkerberos-server
-Apache / PHP Server / kerberos / OpenJDK 1.8
+Apache / PHP 7.2 Server / kerberos / OpenJDK 1.8
 
 Apache + HTTPS + Let's Encrypt Certbot
 PHP + PHP Zip
