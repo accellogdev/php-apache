@@ -30,14 +30,15 @@ RUN a2enmod rewrite \
 # --------------------------------
 # https://hub.docker.com/_/openjdk
 # https://github.com/docker-library/openjdk
-RUN set -eux; \
-	apt-get update; \
+# RUN set -eux; \
+RUN apt-get update; \
     apt-get install -y --no-install-recommends \
 		bzip2 \
 		unzip \
 		xz-utils \
 	# gpg and dirmngr
 		gpg \
+		gpg-agent \
 		dirmngr \
 		\
 	# utilities for keeping Debian and OpenJDK CA certificates in sync
@@ -64,9 +65,9 @@ ENV JAVA_BASE_URL https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/rel
 ENV JAVA_URL_VERSION 8u222b10
 # https://github.com/docker-library/openjdk/issues/320#issuecomment-494050246
 
-RUN set -eux; \
-	\
-	dpkgArch="$(dpkg --print-architecture)"; \
+# RUN set -eux; \
+# 	\
+RUN	dpkgArch="$(dpkg --print-architecture)"; \
 	case "$dpkgArch" in \
 		amd64) upstreamArch='x64' ;; \
 		arm64) upstreamArch='aarch64' ;; \
