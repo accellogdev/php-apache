@@ -1,6 +1,6 @@
 FROM php:7.2-apache AS webservice
 
-LABEL maintainer="valter@accellog.com"
+LABEL maintainer="gustavo@accellog.com"
 
 # ferramentas básicas para o funcionamento
 RUN apt-get update \
@@ -149,10 +149,10 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url 
 && rm -f /tmp/installer.php
 
 # baixando e configurando scripts certbot-auto
-RUN  cd /usr/bin \
-    && wget https://dl.eff.org/certbot-auto \
-    && chmod a+x ./certbot-auto \
-    && ./certbot-auto --os-packages-only -n
+# RUN  cd /usr/bin \
+#     && wget https://dl.eff.org/certbot-auto \
+#     && chmod a+x ./certbot-auto \
+#     && ./certbot-auto --os-packages-only -n
 
 # componentes para o envio de emails e emissão de recibos
 # https://github.com/exozet/docker-php-fpm
@@ -190,6 +190,11 @@ RUN apt-get update && \
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap
+
+# Instalando ferramentas para segurança DDoS e SlowLoris
+RUN apt-get update && \
+	apt-get -y install libapache2-mod-evasive libapache2-mod-qos && \
+	a2enmod evasive
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
