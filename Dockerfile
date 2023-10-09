@@ -1,4 +1,6 @@
-FROM php:7.2-apache AS webservice
+# FROM php:7.2-apache AS webservice
+FROM php:7.4-apache AS webservice
+# FROM php:8.0-apache AS webservice
 
 LABEL maintainer="valter@accellog.com"
 
@@ -89,17 +91,20 @@ RUN apt-get update -y && apt-get install -y \
     libxpm-dev \
     libwebp-dev  # php >=7.0 (use libvpx for php <7.0)
 
-RUN docker-php-ext-install mbstring \
-    && docker-php-ext-install gettext
+# RUN docker-php-ext-install mbstring \
+#     && docker-php-ext-install gettext
+# mbstring já existe no PHP 7.4 / 8.0
+RUN docker-php-ext-install gettext
 
-RUN docker-php-ext-configure gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ \
-    --with-xpm-dir=/usr/include \
-    --with-webp-dir=/usr/include/ # php >=7.0 (use libvpx for php <7.0)
+# RUN docker-php-ext-configure gd \
+#     --with-freetype-dir=/usr/include/ \
+#     --with-jpeg-dir=/usr/include/ \
+#     --with-xpm-dir=/usr/include \
+#     --with-webp-dir=/usr/include/ # php >=7.0 (use libvpx for php <7.0)
+# PHP 7.0/8.0
+RUN docker-php-ext-configure gd
 
-RUN docker-php-ext-install gd \
-    && docker-php-ext-install gettext
+RUN docker-php-ext-install gd
 
 RUN chmod 777 -R /var/www
 
@@ -117,9 +122,9 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap
 
 # Instalando ferramentas para segurança DDoS e SlowLoris
-RUN apt-get update && \
-	apt-get -y install libapache2-mod-evasive libapache2-mod-qos && \
-	a2enmod evasive
+# RUN apt-get update && \
+# 	apt-get -y install libapache2-mod-evasive libapache2-mod-qos && \
+# 	a2enmod evasive
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
