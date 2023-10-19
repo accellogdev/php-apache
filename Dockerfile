@@ -1,8 +1,16 @@
+# FROM php:7.0-apache AS webservice
 # FROM php:7.2-apache AS webservice
-FROM php:7.4-apache AS webservice
+# FROM php:7.4-apache AS webservice
 # FROM php:8.0-apache AS webservice
+FROM php:8.2-apache AS webservice
 
 LABEL maintainer="valter@accellog.com"
+
+# correcao NO_PUBKEY 0E98404D386FA1D9
+# https://stackoverflow.com/questions/77256696/docker-with-php-8-2-raised-error-the-public-key-is-not-available
+RUN mv -i /etc/apt/trusted.gpg.d/debian-archive-*.asc  /root/     ### move /etc/apt/trusted.gpg.d/debian-archive-*.asc to /root/ or to any persistent place you will remember.
+RUN ln -s /usr/share/keyrings/debian-archive-* /etc/apt/trusted.gpg.d/
+RUN apt update
 
 # ferramentas básicas para o funcionamento
 RUN apt-get update \
@@ -53,27 +61,31 @@ RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-
 
 # instalando composer
 # https://hub.docker.com/_/composer/
-RUN apt-get update \
-    && apt-get install -y git subversion mercurial unzip
+# RUN apt-get update \
+#     && apt-get install -y git subversion mercurial unzip
 
-RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini"
+# RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini"
 
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_HOME /tmp
-ENV COMPOSER_VERSION 1.8.4
+# ENV COMPOSER_ALLOW_SUPERUSER 1
+# ENV COMPOSER_HOME /tmp
+# ENV COMPOSER_VERSION 1.8.4
 
-RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer \
- && php -r " \
-    \$signature = '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5'; \
-    \$hash = hash('sha384', file_get_contents('/tmp/installer.php')); \
-    if (!hash_equals(\$signature, \$hash)) { \
-        unlink('/tmp/installer.php'); \
-        echo 'Integrity check failed, installer is either corrupt or worse.' . PHP_EOL; \
-        exit(1); \
-    }" \
- && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
- && composer --ansi --version --no-interaction \
-&& rm -f /tmp/installer.php
+# RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer \
+#  && php -r " \
+#     \$signature = '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5'; \
+#     \$hash = hash('sha384', file_get_contents('/tmp/installer.php')); \
+#     if (!hash_equals(\$signature, \$hash)) { \
+#         unlink('/tmp/installer.php'); \
+#         echo 'Integrity check failed, installer is either corrupt or worse.' . PHP_EOL; \
+#         exit(1); \
+#     }" \
+#  && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
+#  && composer --ansi --version --no-interaction \
+# && rm -f /tmp/installer.php
+
+# instalando composer
+# https://hub.docker.com/_/composer/
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/bin/composer
 
 # baixando e configurando scripts certbot-auto
 # RUN  cd /usr/bin \
@@ -125,6 +137,9 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
 # RUN apt-get update && \
 # 	apt-get -y install libapache2-mod-evasive libapache2-mod-qos && \
 # 	a2enmod evasive
+
+RUN docker-php-ext-configure bcmath && \
+    docker-php-ext-install bcmath
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
