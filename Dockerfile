@@ -148,14 +148,6 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url 
  && composer --ansi --version --no-interaction \
 && rm -f /tmp/installer.php
 
-# baixando e configurando scripts certbot-auto
-# RUN  cd /usr/bin \
-#     && wget https://dl.eff.org/certbot-auto \
-#     && chmod a+x ./certbot-auto \
-#     && ./certbot-auto --os-packages-only -n
-
-# componentes para o envio de emails e emissão de recibos
-# https://github.com/exozet/docker-php-fpm
 RUN apt-get update -y && apt-get install -y \
   sendmail \
   libpng-dev \
@@ -178,11 +170,6 @@ RUN docker-php-ext-install gd \
 	
 RUN chmod 777 -R /var/www
 
-#RUN apt-get update -y && apt-get install -y sendmail libpng-dev \
-#    && docker-php-ext-install mbstring \
-#    && docker-php-ext-install gd \
-#    && docker-php-ext-install gettext
-
 RUN apt-get update && \
     apt-get install -y \
         libc-client-dev libkrb5-dev && \
@@ -190,11 +177,6 @@ RUN apt-get update && \
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap
-
-# Instalando ferramentas para segurança DDoS e SlowLoris
-RUN apt-get update && \
-	apt-get -y install libapache2-mod-evasive libapache2-mod-qos && \
-	a2enmod evasive
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
