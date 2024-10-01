@@ -1,0 +1,32 @@
+## modelo de configuração de cliente em docker - cargapontual
+## arquivo ini: /usr/local/etc/php
+services:
+
+  apache:
+    container_name: apache
+    image: php-apache:7.2-redis
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./data/log:/var/log/apache2:Z
+      ## dar permissão 777 no diretório relatorios: $ chmod -R 777 ./relatorios
+      - ./data/relatorios:/relatorios:Z
+      ## dar permissão 777 no diretório tmp: $ chmod -R 777 ./tmp
+      - ./data/tmp:/tmp:Z
+      - ./data/scripts:/scripts:Z
+      - ./data/html:/var/www/html:Z
+
+  redis:
+    image: redis:7.4.0
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  redisinsight:
+    container_name: redisinsight
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - 5540:5540 
