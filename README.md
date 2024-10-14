@@ -19,9 +19,18 @@ Utilizar variável de ambiente SESSION_HANDLER e SESSION_PATH.
 
 Utilizar variável de ambiente
 
+#### Arquivo:
+
 ```
 SESSION_HANDLER: files
 SESSION_PATH: "/tmp"
+```
+
+#### Redis:
+
+```
+SESSION_HANDLER: redis
+SESSION_PATH: "tpc://redis:6379"
 ```
 
 # Teste de Compilar Docker
