@@ -34,6 +34,10 @@ RUN apt-get update \
 && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 && docker-php-ext-install pdo pdo_pgsql pgsql
 
+# instalando Redis
+RUN pecl install redis \
+	&& docker-php-ext-enable redis
+
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
@@ -70,24 +74,22 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # backwards compatibility shim
 RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
-# https://adoptopenjdk.net/upstream.html
-ENV JAVA_VERSION 8u222
-ENV JAVA_BASE_URL https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_
-ENV JAVA_URL_VERSION 8u222b10
-# https://github.com/docker-library/openjdk/issues/320#issuecomment-494050246
-
 # Install xdebug
-RUN if [[ test "$arg" = "develop" ]] ; then \
+RUN if test "$arg" = "develop" ; then \
     pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini ; \
+    fi
 
 # Install Java Open JDK 8
 # RUN apt-get install -y openjdk-8-jdk
 ENV JAVA_HOME=/opt/java/openjdk
 COPY --from=eclipse-temurin:8u382-b05-jdk $JAVA_HOME $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Copiando php.ini default da Accellog
+COPY php.ini-production /usr/local/etc/php/php.ini
 
 RUN chmod 777 -R /var/www
 RUN chmod 777 -R /tmp
