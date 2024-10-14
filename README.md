@@ -14,6 +14,11 @@ Apache / PHP 8.2 Server /  OpenJDK 1.8
 # Teste de Compilar Docker
 
 ```
-docker build -f ./Dockerfile -t php8.2-apache:v1.0 .
-podman build -f ./Dockerfile -t php8.2-apache:v1.0 .
+## gerando para desenvolvimento
+docker build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=develop
+podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=develop
+
+## gerando para produção
+docker build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
+podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
 ```
