@@ -1,0 +1,7 @@
+[PHP]
+memory_limit = -1
+
+[Session]
+session.save_handler = ${SESSION_HANDLER}
+session.save_path = ${SESSION_PATH}
+session.name = PHPSESSID
