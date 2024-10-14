@@ -1,4 +1,5 @@
 FROM php:8.2-apache
+ARG arg
 
 # https://github.com/asimlqt/docker-php/blob/master/apache/8.2/Dockerfile
 
@@ -76,7 +77,8 @@ ENV JAVA_URL_VERSION 8u222b10
 # https://github.com/docker-library/openjdk/issues/320#issuecomment-494050246
 
 # Install xdebug
-RUN pecl install xdebug \
+RUN if [[ test "$arg" = "develop" ]] ; then \
+    pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
