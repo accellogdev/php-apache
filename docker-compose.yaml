@@ -6,6 +6,9 @@ services:
     container_name: apache
     image: php-apache:7.2-redis
     restart: always
+    environment:
+      - SESSION_HANDLER=redis
+      - SESSION_PATH="tpc://redis:6379"
     ports:
       - 8080:80
     volumes:

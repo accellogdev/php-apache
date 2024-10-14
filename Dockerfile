@@ -80,6 +80,9 @@ RUN apt-get update && \
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap
 
+## definindo php.ini
+COPY php.ini-production /usr/local/etc/php/php.ini
+
 WORKDIR /var/www/html
 EXPOSE 80 80
 EXPOSE 443 443
