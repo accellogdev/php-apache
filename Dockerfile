@@ -44,7 +44,7 @@ RUN apt-get update; \
 		fontconfig libfreetype6;
 
 ENV JAVA_HOME=/usr/local/openjdk-8
-COPY --from=openjdk:8.222 $JAVA_HOME $JAVA_HOME
+COPY --from=accellogdev/openjdk-8u222:v1.0 $JAVA_HOME $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 # # -------------------------------- fim instalando JDK
