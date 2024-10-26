@@ -44,3 +44,18 @@ podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=develop
 docker build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
 podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
 ```
+
+## Renomear tag
+
+```
+docker tag php8.2-apache:v1.0 docker.io/accellogdev/php8.2-apache:v2.1-dev
+
+podman tag php8.2-apache:v1.0 docker.io/accellogdev/php8.2-apache:v2.1-dev
+```
+
+## Push docker.io (precisa fazer login)
+
+```
+docker push docker.io/accellogdev/php8.2-apache:2.1-dev
+podman push docker.io/accellogdev/php8.2-apache:2.1-dev
+```
