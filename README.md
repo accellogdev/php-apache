@@ -18,6 +18,13 @@ docker build -f ./Dockerfile -t php-apache:7.2-redis .
 podman build -f ./Dockerfile -t php-apache:7.2-redis .
 ```
 
+### Buildar Java
+
+```
+docker build -f ./Dockerfile-java -t docker.io/accellogdev/openjdk-8u222:v1.0 .
+podman build -f ./Dockerfile-java -t docker.io/accellogdev/openjdk-8u222:v1.0 .
+```
+
 ## Configuração Session
 
 ```
