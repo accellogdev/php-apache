@@ -14,8 +14,8 @@ Apache / PHP 7.2 Server / kerberos / OpenJDK 1.8
 ### Teste de Compilar Container
 
 ```
-docker build -f ./Dockerfile -t php-apache:7.2-redis .
-podman build -f ./Dockerfile -t php-apache:7.2-redis .
+docker build -f ./Dockerfile -t docker.io/accellogdev/php7.2:v2.0 .
+podman build -f ./Dockerfile -t docker.io/accellogdev/php7.2:v2.0 .
 ```
 
 ### Buildar Java

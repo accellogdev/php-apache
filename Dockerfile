@@ -30,6 +30,12 @@ RUN pecl install redis-6.0.2 \
 	&& docker-php-ext-enable redis
 
 
+# instalando composer
+# https://hub.docker.com/_/composer/
+RUN apt-get update \
+    && apt-get install -y git subversion mercurial
+
+
 # # --------------------------------
 # # instalando JDK
 # # --------------------------------    
