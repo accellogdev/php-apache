@@ -48,6 +48,9 @@ RUN pecl install redis \
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+# instalando git
+RUN apt-get update \
+    && apt-get install -y git subversion mercurial
 
 # Install xdebug
 RUN if test "$arg" = "develop" ; then \

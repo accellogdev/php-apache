@@ -37,12 +37,12 @@ SESSION_PATH: "tpc://redis:6379"
 
 ```
 ## gerando para desenvolvimento
-docker build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=develop
-podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=develop
+docker build -f ./Dockerfile -t docker.io/accellogdev/php8.2-apache:v2.0 . --build-arg arg=develop
+podman build -f ./Dockerfile -t docker.io/accellogdev/php8.2-apache:v2.0 . --build-arg arg=develop
 
 ## gerando para produção
-docker build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
-podman build -f ./Dockerfile -t php8.2-apache:v1.0 . --build-arg arg=production
+docker build -f ./Dockerfile -t docker.io/accellogdev/php8.2-apache:v1.0 . --build-arg arg=production
+podman build -f ./Dockerfile -t docker.io/accellogdev/php8.2-apache:v1.0 . --build-arg arg=production
 ```
 
 ## Renomear tag
