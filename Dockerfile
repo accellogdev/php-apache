@@ -10,6 +10,10 @@ RUN apt-get update \
     && apt-get install -y net-tools \
     && apt-get install -y wget
 
+# instalacao de fontes para o QrCode utilizado no JasperReports
+RUN apt-get update \
+    && apt-get install -y fontconfig
+
 RUN set -x \
     && a2enmod rewrite \
     && apt-get update \
