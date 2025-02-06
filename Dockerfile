@@ -7,7 +7,8 @@ RUN apt-get update \
     && apt-get install -y apt-utils \
     && apt-get install -y vim \
     && apt-get install -y net-tools \
-    && apt-get install -y wget
+    && apt-get install -y wget \
+    && apt-get install -y fontconfig
 
 # instalando PostgreSQL PDO
 RUN apt-get update \
