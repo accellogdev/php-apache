@@ -1,0 +1,140 @@
+# Git
+.git
+.gitignore
+.gitattributes
+.gitkeep
+
+# Documentation
+README.md
+MIGRATION.md
+*.md
+docs/
+documentation/
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+log/
+var/log/
+
+# Cache and temporary files
+.cache/
+.tmp/
+tmp/
+temp/
+cache/
+var/cache/
+var/tmp/
+
+# Node.js (if present)
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm
+.yarn
+
+# Composer
+vendor/
+composer.lock
+composer.phar
+.composer/
+
+# PHP
+.php_cs.cache
+.phpunit.result.cache
+phpunit.xml
+.env.local
+.env.*.local
+
+# Testing
+tests/
+test/
+__tests__/
+.phpunit.cache
+coverage/
+.coverage
+
+# Build artifacts
+build/
+dist/
+out/
+target/
+
+# Database
+*.sql
+*.sqlite
+*.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Example and template files
+*.example
+*.template
+*.sample
+docker-compose.example.yml
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+Jenkinsfile
+
+# Security sensitive files
+.env
+.env.local
+.env.production
+.env.staging
+secrets/
+private/
+ssl/
+certificates/
+
+# Data directories
+data/
+storage/
+uploads/
+media/
+assets/original/
+
+# Monitoring and profiling
+.blackfire.ini
+xhprof/
+profiler/
