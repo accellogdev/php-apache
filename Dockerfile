@@ -1,7 +1,7 @@
-FROM php:8.2-apache
+FROM php:8.5-apache
 ARG arg
 
-# https://github.com/asimlqt/docker-php/blob/master/apache/8.2/Dockerfile
+# https://github.com/asimlqt/docker-php/blob/master/apache/8.5/Dockerfile
 
 # ferramentas básicas para o funcionamento
 RUN apt-get update \
@@ -27,12 +27,9 @@ RUN set -x \
         libzip-dev \
         libxml2-dev \
         libonig-dev \
-    && docker-php-ext-install -j$(nproc) bcmath exif iconv intl mysqli opcache pdo_mysql zip \
-    && docker-php-ext-configure bz2 --with-bz2=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) bz2 \
-    && docker-php-ext-configure soap --enable-soap \
+    && docker-php-ext-install -j$(nproc) bcmath exif iconv intl mysqli pdo_mysql zip bz2 \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd bcmath xml soap mbstring \
+    && docker-php-ext-install -j$(nproc) gd soap mbstring \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql \
     && docker-php-ext-install -j$(nproc) gmp 
